@@ -86,7 +86,7 @@ env.StaticLibrary('leveldb',
     SOURCE,
 )
 
-if int(shared) == 1:
+if int(shared) == 1 and env['CC'] == 'gcc':
     env.SharedLibrary('leveldb',
         SOURCE,
         LIBS = ['pthread'],
@@ -96,7 +96,8 @@ if int(shared) == 1:
 
 env_test = env.Clone()
 env_test.Append(LIBS = ['leveldb'])
-env_test.Append(LINKFLAGS = '-Wl,--rpath=./')
+if env['CC'] == 'gcc':
+    env_test.Append(LINKFLAGS = '-Wl,--rpath=./')
 if env_test['PLATFORM'] == 'posix':
     env_test.Append(LIBS = ['pthread'])
     env_test.Program('c_test', 'db/c_test.c', LIBS = ['leveldb', 'pthread', 'stdc++'])
