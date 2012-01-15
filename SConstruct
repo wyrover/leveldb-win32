@@ -1,19 +1,20 @@
 # this is the build script used by SCons
 # maintained by zhangyafeikimi
 #
-# scons [debug==0]
+# scons [debug==0] [shared=1]
 #
 debug = ARGUMENTS.get('debug', 1)
-env=Environment()
-env=env.Clone()
+shared = ARGUMENTS.get('shared', 0)
+env = Environment()
+env = env.Clone()
 
 print 'building for %s' % env['PLATFORM']
 print 'debug = %s' % debug
+print 'shared = %s' % shared
 print 'clean = %s' % env.GetOption('clean')
 
 env.Append(CPPPATH = ['.', 'include'])
 env.Append(LIBPATH = ['.'])
-env.Append(LIBS = ['leveldb'])
 
 if env['PLATFORM'] == 'win32':
     env.Append(CPPPATH = ['port\win'])
@@ -21,7 +22,6 @@ if env['PLATFORM'] == 'win32':
     env.Append(CCFLAGS = '/Zi /W3 /wd4996 /wd4800 /wd4355 /wd4244 /wd4018')
 elif env['PLATFORM'] == 'posix':
     env.Append(CPPFLAGS = ['-DLEVELDB_PLATFORM_POSIX'])
-    env.Append(LIBS = ['pthread'])
 
 if env['CC'] == 'cl':
     env.Append(CCFLAGS = '/EHsc')
@@ -86,25 +86,37 @@ env.StaticLibrary('leveldb',
     SOURCE,
 )
 
-if env['PLATFORM'] == 'posix':
-  env.Program('c_test', 'db/c_test.c', LIBS=['leveldb', 'pthread', 'stdc++'])
-env.Program('corruption_test', 'db/corruption_test.cc')
-env.Program('db_test', 'db/db_test.cc')
-env.Program('dbformat_test', 'db/dbformat_test.cc')
-env.Program('filename_test', 'db/filename_test.cc')
-env.Program('log_test', 'db/log_test.cc')
-env.Program('skiplist_test', 'db/skiplist_test.cc')
-env.Program('version_edit_test', 'db/version_edit_test.cc')
-env.Program('version_set_test', 'db/version_set_test.cc')
-env.Program('write_batch_test', 'db/write_batch_test.cc')
-env.Program('memenv_test', 'helpers/memenv/memenv_test.cc')
-env.Program('table_test', 'table/table_test.cc')
-env.Program('arena_test', 'util/arena_test.cc')
-env.Program('cache_test', 'util/cache_test.cc')
-env.Program('coding_test', 'util/coding_test.cc')
-env.Program('crc32c_test', 'util/crc32c_test.cc')
-env.Program('env_test', 'util/env_test.cc')
+if int(shared) == 1:
+    env.SharedLibrary('leveldb',
+        SOURCE,
+        LIBS = ['pthread'],
+        LINKFLAGS = '-Wl,--no-undefined',
+    )
 
-env.Program('db_bench', 'db/db_bench.cc')
+
+env_test = env.Clone()
+env_test.Append(LIBS = ['leveldb'])
+env_test.Append(LINKFLAGS = '-Wl,--rpath=./')
+if env_test['PLATFORM'] == 'posix':
+    env_test.Append(LIBS = ['pthread'])
+    env_test.Program('c_test', 'db/c_test.c', LIBS = ['leveldb', 'pthread', 'stdc++'])
+env_test.Program('corruption_test', 'db/corruption_test.cc')
+env_test.Program('db_test', 'db/db_test.cc')
+env_test.Program('dbformat_test', 'db/dbformat_test.cc')
+env_test.Program('filename_test', 'db/filename_test.cc')
+env_test.Program('log_test', 'db/log_test.cc')
+env_test.Program('skiplist_test', 'db/skiplist_test.cc')
+env_test.Program('version_edit_test', 'db/version_edit_test.cc')
+env_test.Program('version_set_test', 'db/version_set_test.cc')
+env_test.Program('write_batch_test', 'db/write_batch_test.cc')
+env_test.Program('memenv_test', 'helpers/memenv/memenv_test.cc')
+env_test.Program('table_test', 'table/table_test.cc')
+env_test.Program('arena_test', 'util/arena_test.cc')
+env_test.Program('cache_test', 'util/cache_test.cc')
+env_test.Program('coding_test', 'util/coding_test.cc')
+env_test.Program('crc32c_test', 'util/crc32c_test.cc')
+env_test.Program('env_test', 'util/env_test.cc')
+
+env_test.Program('db_bench', 'db/db_bench.cc')
 
 
