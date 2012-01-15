@@ -19,6 +19,9 @@ if env['PLATFORM'] == 'win32':
     env.Append(CPPPATH = ['port\win'])
     env.Append(CPPFLAGS = ['/DWIN32', '/DLEVELDB_PLATFORM_WINDOWS', '/DOS_WIN', '/DCOMPILER_MSVC'])
     env.Append(CCFLAGS = '/Zi /W3 /wd4996 /wd4800 /wd4355 /wd4244 /wd4018')
+elif env['PLATFORM'] == 'posix':
+    env.Append(CPPFLAGS = ['-DLEVELDB_PLATFORM_POSIX'])
+    env.Append(LIBS = ['pthread'])
 
 if env['CC'] == 'cl':
     env.Append(CCFLAGS = '/EHsc')
@@ -29,9 +32,10 @@ if env['CC'] == 'cl':
         env.Append(CCFLAGS = '/O2 /Oi /MT /GL /Gy')
         env.Append(CPPFLAGS = ['/DNDEBUG'])
 elif env['CC'] == 'gcc':
-    env.Append(CCFLAGS = '-Wall -g')
+    env.Append(CCFLAGS = '-g -fno-builtin-memcmp -pthread')
     if int(debug) == 0:
         env.Append(CCFLAGS = '-O2')
+        env.Append(CPPFLAGS = '-DNDEBUG')
 
 
 SOURCE = [
@@ -75,11 +79,15 @@ SOURCE = [
 
 if env['PLATFORM'] == 'win32':
     SOURCE += ['port/port_win.cc', 'util/env_win.cc']
+elif env['PLATFORM'] == 'posix':
+    SOURCE += ['port/port_posix.cc', 'util/env_posix.cc']
 
 env.StaticLibrary('leveldb',
     SOURCE,
 )
 
+if env['PLATFORM'] == 'posix':
+  env.Program('c_test', 'db/c_test.c', LIBS=['leveldb', 'pthread', 'stdc++'])
 env.Program('corruption_test', 'db/corruption_test.cc')
 env.Program('db_test', 'db/db_test.cc')
 env.Program('dbformat_test', 'db/dbformat_test.cc')
@@ -96,5 +104,7 @@ env.Program('cache_test', 'util/cache_test.cc')
 env.Program('coding_test', 'util/coding_test.cc')
 env.Program('crc32c_test', 'util/crc32c_test.cc')
 env.Program('env_test', 'util/env_test.cc')
+
+env.Program('db_bench', 'db/db_bench.cc')
 
 

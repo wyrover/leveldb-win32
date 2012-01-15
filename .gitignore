@@ -1,3 +1,6 @@
+*.o
+*.a
+*.so
 *.ncb
 *.suo
 *.user
@@ -9,3 +12,5 @@ Debug
 Release
 .sconf_temp
 .sconsign.dblite
+*_test
+db_bench
