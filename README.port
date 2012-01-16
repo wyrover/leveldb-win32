@@ -3,7 +3,7 @@ port/port_boost.cc
 port/port_boost.h
 is me.
 
-However, port/port_win.cc port/port_win.h util/env_win.cc is mainly from http://code.google.com/r/kkowalczyk-leveldb
+However, port/port_win.cc port/port_win.h util/env_win.cc are mainly from http://code.google.com/r/kkowalczyk-leveldb
 
 This repository is now fully available for windows and posix.
 
