@@ -37,7 +37,6 @@ elif env['CC'] == 'gcc':
         env.Append(CCFLAGS = '-O2')
         env.Append(CPPFLAGS = '-DNDEBUG')
 
-
 SOURCE = [
     'db/builder.cc',
     'db/c.cc',
@@ -93,7 +92,6 @@ if int(shared) == 1 and env['CC'] == 'gcc':
         LINKFLAGS = '-Wl,--no-undefined',
     )
 
-
 env_test = env.Clone()
 env_test.Append(LIBS = ['leveldb'])
 if env['CC'] == 'gcc':
@@ -119,5 +117,4 @@ env_test.Program('crc32c_test', 'util/crc32c_test.cc')
 env_test.Program('env_test', 'util/env_test.cc')
 
 env_test.Program('db_bench', 'db/db_bench.cc')
-
 
