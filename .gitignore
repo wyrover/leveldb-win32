@@ -1,5 +1,9 @@
-*.o
+build_config.mk
 *.a
+*.o
+*_test
+db_bench
+
 *.os
 *.so
 *.ncb
@@ -13,5 +17,3 @@ Debug
 Release
 .sconf_temp
 .sconsign.dblite
-*_test
-db_bench
