@@ -77,7 +77,7 @@ SOURCE = [
 ]
 
 if env['PLATFORM'] == 'win32':
-    SOURCE += ['port/port_win.cc', 'util/env_win.cc']
+    SOURCE += ['port/port_win.cc', 'port/env_win.cc']
 elif env['PLATFORM'] == 'posix':
     SOURCE += ['port/port_posix.cc', 'util/env_posix.cc']
 
