@@ -8,10 +8,13 @@ shared = ARGUMENTS.get('shared', 0)
 env = Environment()
 env = env.Clone()
 
-print 'building for %s' % env['PLATFORM']
-print 'debug = %s' % debug
-print 'shared = %s' % shared
-print 'clean = %s' % env.GetOption('clean')
+if not env.GetOption('clean'):
+  print 'building for %s' % env['PLATFORM']
+  print 'debug = %s' % debug
+  print 'shared = %s' % shared
+  print 'clean = %s' % env.GetOption('clean')
+else:
+  shared = 1 #ensure to clean shared library
 
 env.Append(CPPPATH = ['.', 'include'])
 env.Append(LIBPATH = ['.'])
