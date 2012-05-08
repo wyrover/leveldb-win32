@@ -55,6 +55,7 @@ SOURCE = [
     'helpers/memenv/memenv.cc',
     'table/block.cc',
     'table/block_builder.cc',
+    'table/filter_block.cc',
     'table/format.cc',
     'table/iterator.cc',
     'table/merger.cc',
@@ -62,11 +63,13 @@ SOURCE = [
     'table/table_builder.cc',
     'table/two_level_iterator.cc',
     'util/arena.cc',
+    'util/bloom.cc',
     'util/cache.cc',
     'util/coding.cc',
     'util/comparator.cc',
     'util/crc32c.cc',
     'util/env.cc',
+    'util/filter_policy.cc',
     'util/hash.cc',
     'util/histogram.cc',
     'util/logging.cc',
@@ -109,8 +112,10 @@ env_test.Program('version_edit_test', 'db/version_edit_test.cc')
 env_test.Program('version_set_test', 'db/version_set_test.cc')
 env_test.Program('write_batch_test', 'db/write_batch_test.cc')
 env_test.Program('memenv_test', 'helpers/memenv/memenv_test.cc')
+env_test.Program('filter_block_test', 'table/filter_block_test.cc')
 env_test.Program('table_test', 'table/table_test.cc')
 env_test.Program('arena_test', 'util/arena_test.cc')
+env_test.Program('bloom_test', 'util/bloom_test.cc')
 env_test.Program('cache_test', 'util/cache_test.cc')
 env_test.Program('coding_test', 'util/coding_test.cc')
 env_test.Program('crc32c_test', 'util/crc32c_test.cc')
