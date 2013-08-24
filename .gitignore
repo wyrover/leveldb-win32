@@ -18,6 +18,8 @@ leveldbutil
 *.lib
 *.exe
 Debug
+DebugDll
 Release
+ReleaseDll
 .sconf_temp
 .sconsign.dblite
