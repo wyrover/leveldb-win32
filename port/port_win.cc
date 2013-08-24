@@ -479,5 +479,11 @@ code review and validate its correctness.
 
 */
 
+void InitOnce(OnceType* once, void (*initializer)()) {
+  if(InterlockedCompareExchange(once, 1, LEVELDB_ONCE_INIT)==LEVELDB_ONCE_INIT){
+    initializer();
+  }
+}
+
 }
 }

@@ -105,6 +105,7 @@ if env['CC'] == 'gcc':
 if env_test['PLATFORM'] == 'posix':
     env_test.Append(LIBS = ['pthread'])
     env_test.Program('c_test', 'db/c_test.c', LIBS = ['leveldb', 'pthread', 'stdc++'])
+env_test.Program('autocompact_test', 'db/autocompact_test.cc')
 env_test.Program('corruption_test', 'db/corruption_test.cc')
 env_test.Program('db_test', 'db/db_test.cc')
 env_test.Program('dbformat_test', 'db/dbformat_test.cc')
@@ -115,6 +116,7 @@ env_test.Program('version_edit_test', 'db/version_edit_test.cc')
 env_test.Program('version_set_test', 'db/version_set_test.cc')
 env_test.Program('write_batch_test', 'db/write_batch_test.cc')
 env_test.Program('memenv_test', 'helpers/memenv/memenv_test.cc')
+env_test.Program('issue178_test', 'issues/issue178_test.cc')
 env_test.Program('filter_block_test', 'table/filter_block_test.cc')
 env_test.Program('table_test', 'table/table_test.cc')
 env_test.Program('arena_test', 'util/arena_test.cc')
@@ -125,4 +127,5 @@ env_test.Program('crc32c_test', 'util/crc32c_test.cc')
 env_test.Program('env_test', 'util/env_test.cc')
 
 env_test.Program('db_bench', 'db/db_bench.cc')
+env_test.Program('leveldb_main', 'db/leveldb_main.cc')
 

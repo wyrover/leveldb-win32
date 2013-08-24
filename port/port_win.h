@@ -45,6 +45,8 @@
 #undef DeleteFile
 #endif
 
+typedef int ssize_t;
+
 #include <string>
 
 #include <stdint.h>
@@ -201,6 +203,10 @@ class AtomicPointer {
     rep_ = v;
   }
 };
+
+typedef LONG OnceType;
+#define LEVELDB_ONCE_INIT 0
+void InitOnce(OnceType* once, void (*initializer)());
 
 inline bool Snappy_Compress(const char* input, size_t length,
                             ::std::string* output) {
