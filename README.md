@@ -1,6 +1,7 @@
 leveldb for Win32
 
 
+Sync with official leveldb 1.13
 Features:
 1. linux build are identical with offical release
 2. Windows scons build
