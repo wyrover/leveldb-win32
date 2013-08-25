@@ -21,6 +21,7 @@ else:
 
 if env['PLATFORM'] != 'win32' or env['CC'] != 'cl':
     print 'scons is only for win32/cl, please use Makefile'
+    import sys
     sys.exit(1)
 
 env.Append(CPPPATH = ['.', 'include', 'port/win'])
