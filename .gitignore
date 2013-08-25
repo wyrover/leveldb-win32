@@ -16,6 +16,8 @@ leveldbutil
 *.pdb
 *.obj
 *.lib
+*.dll
+*.exp
 *.exe
 Debug
 DebugDll
