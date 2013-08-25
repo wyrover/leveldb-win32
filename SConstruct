@@ -15,6 +15,8 @@ if not env.GetOption('clean'):
     print 'debug = %s' % debug
     print 'static = %s' % static
     print 'shared = %s' % shared
+    import os
+    os.system('cl')
 else:
     static = 1 #ensure to clean static library
     shared = 1 #ensure to clean shared library
