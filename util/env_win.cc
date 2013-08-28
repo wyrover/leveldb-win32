@@ -1,3 +1,4 @@
+#if defined LEVELDB_PLATFORM_WINDOWS
 #include "port/port_win.h"
 #include <stdio.h>
 #include <string.h>
@@ -792,3 +793,4 @@ Env* Env::Default() {
 }
 
 }
+#endif // LEVELDB_PLATFORM_WINDOWS
